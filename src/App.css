@@ -12,3 +12,7 @@ body {
   text-transform: uppercase;
   color: rgba(5, 107, 147, 0.6);
 }
+
+.dropzone.active {
+  border-color: rgb(4, 61, 167);
+}
