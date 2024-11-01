@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
+const chunkSize = 10 * 1024
+
 function App () {
   const [dropzoneActive, setDropzoneActive] = useState(false)
   const [files, setFiles] = useState([])
@@ -13,7 +15,24 @@ function App () {
     setFiles([...files, ...e.dataTransfer.files])
   }
 
-  function readAndUploadCurrentChunk () {}
+  function readAndUploadCurrentChunk () {
+    const reader = new FileReader()
+    const file = files[currentFileIndex]
+    if (!files) {
+      return
+    }
+    const from = currentChunkIndex * chunkSize
+
+    const to = from + chunkSize
+    const blob = file.slice(from, to)
+    reader.onload = e => uploadChunk(e)
+    reader.readAsDataURL(blob)
+  }
+
+  function uploadChunk (readerEvent) {
+    const file = files[currentFileIndex]
+    const data = readerEvent.target.result
+  }
 
   useEffect(() => {
     if (files.length > 0) {
