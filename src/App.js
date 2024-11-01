@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 import './App.css'
 
 const chunkSize = 10 * 1024
@@ -32,6 +33,16 @@ function App () {
   function uploadChunk (readerEvent) {
     const file = files[currentFileIndex]
     const data = readerEvent.target.result
+    const params = new URLSearchParams()
+    params.set('name', file.name)
+    params.set('size', file.size)
+    params.set('currentChunkIndex', currentChunkIndex)
+    params.set('totalChunks', Math.ceil(file.size / chunkSize))
+    const headers = { 'Content-Type': 'application/octet-stream' }
+    axios.post(url, data, { headers }).then(response => {
+      const file = files[currentFileIndex]
+      const filesize = files[currentFileIndex].size
+    })
   }
 
   useEffect(() => {
