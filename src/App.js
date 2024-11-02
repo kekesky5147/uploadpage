@@ -42,6 +42,15 @@ function App () {
     axios.post(url, data, { headers }).then(response => {
       const file = files[currentFileIndex]
       const filesize = files[currentFileIndex].size
+      const chunks = Math.ceil(filesize / chunkSize) - 1
+      const isLastChunk = currentChunkIndex === chunks
+      if (isLastChunk) {
+        file.finalFilename = response.data.finalFilename
+        setLastUploadedFileIndex(currentFileIndex)
+        setCurrentChunkIndex(null)
+      } else {
+        setCurrentChunkIndex(currentChunkIndex + 1)
+      }
     })
   }
 
