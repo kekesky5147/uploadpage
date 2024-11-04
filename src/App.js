@@ -39,6 +39,7 @@ function App () {
     params.set('currentChunkIndex', currentChunkIndex)
     params.set('totalChunks', Math.ceil(file.size / chunkSize))
     const headers = { 'Content-Type': 'application/octet-stream' }
+    // eslint-disable-next-line no-undef
     axios.post(url, data, { headers }).then(response => {
       const file = files[currentFileIndex]
       const filesize = files[currentFileIndex].size
