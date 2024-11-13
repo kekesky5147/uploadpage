@@ -61,6 +61,7 @@ function App () {
     const isLastFile = lastUploadedFileIndex === files.length - 1
     const nextFileIndex = isLastFile ? null : currentFileIndex + 1
     setCurrentFileIndex(nextFileIndex)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastUploadedFileIndex])
 
   useEffect(() => {
